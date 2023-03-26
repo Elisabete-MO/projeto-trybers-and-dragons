@@ -1,16 +1,12 @@
 import Race from './Race';
 
 export default class Elf extends Race {
-  private readonly _maxLifePoints = 99;
-  private static _numberOfInstances = 0;
-  private static readonly _maxNumberOfInstances = 500;
+  private _maxLifePoints: number;
+  private static _numberOfInstances: number;
 
   constructor(name: string, dexterity: number) {
     super(name, dexterity);
-    if (Elf._numberOfInstances >= Elf._maxNumberOfInstances) {
-      throw new Error('Max number of instances reached');
-    }
-    Elf._numberOfInstances += 1;
+    this._maxLifePoints = 99;
   }
 
   public get maxLifePoints(): number {
@@ -18,6 +14,11 @@ export default class Elf extends Race {
   }
 
   static createdRacesInstances(): number {
+    if (!this._numberOfInstances) {
+      this._numberOfInstances = 1;
+      return this._numberOfInstances;
+    }
+    this._numberOfInstances += 1;
     return this._numberOfInstances;
   }
 }

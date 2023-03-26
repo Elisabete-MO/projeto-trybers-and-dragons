@@ -2,18 +2,13 @@ import { EnergyType } from '../Energy';
 import Archetype from './Archetype';
 
 export default class Warrior extends Archetype {
-  private readonly _energyType: EnergyType;
-  private static _numberOfInstances = 0;
-  private static readonly _maxNumberOfInstances = 500;
+  private _energyType: EnergyType;
+  private static _numberOfInstances: number;
 
   constructor(
     name: string,
   ) {
     super(name);
-    if (Warrior._numberOfInstances >= Warrior._maxNumberOfInstances) {
-      throw new Error('Max number of instances reached');
-    }
-    Warrior._numberOfInstances += 1;
     this._energyType = 'stamina';
   }
 
@@ -22,6 +17,11 @@ export default class Warrior extends Archetype {
   }
 
   public static createdArchetypeInstances(): number {
+    if (!this._numberOfInstances) {
+      this._numberOfInstances = 1;
+      return this._numberOfInstances;
+    }
+    this._numberOfInstances += 1;
     return this._numberOfInstances;
   }
 }

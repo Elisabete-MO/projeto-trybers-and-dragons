@@ -1,19 +1,12 @@
 import Race from './Race';
 
 export default class Dwarf extends Race {
-  private readonly _maxLifePoints = 80;
-  private static _numberOfInstances = 0;
-  private static readonly _maxNumberOfInstances = 500;
+  private _maxLifePoints: number;
+  private static _numberOfInstances: number;
 
-  constructor(
-    name: string,
-    dexterity: number,
-  ) {
+  constructor(name: string, dexterity: number) {
     super(name, dexterity);
-    if (Dwarf._numberOfInstances >= Dwarf._maxNumberOfInstances) {
-      throw new Error('Max number of instances reached');
-    }
-    Dwarf._numberOfInstances += 1;
+    this._maxLifePoints = 80;
   }
 
   public get maxLifePoints(): number {
@@ -21,6 +14,11 @@ export default class Dwarf extends Race {
   }
 
   static createdRacesInstances(): number {
+    if (!this._numberOfInstances) {
+      this._numberOfInstances = 1;
+      return this._numberOfInstances;
+    }
+    this._numberOfInstances += 1;
     return this._numberOfInstances;
   }
 }

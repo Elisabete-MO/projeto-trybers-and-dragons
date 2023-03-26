@@ -1,19 +1,14 @@
 import { EnergyType } from '../Energy';
 import Archetype from './Archetype';
 
-export default class Necromancer extends Archetype {
-  private readonly _energyType: EnergyType;
-  private static _numberOfInstances = 0;
-  private static readonly _maxNumberOfInstances = 500;
+export default class Necromacer extends Archetype {
+  private _energyType: EnergyType;
+  private static _numberOfInstances: number;
 
   constructor(
     name: string,
   ) {
     super(name);
-    if (Necromancer._numberOfInstances >= Necromancer._maxNumberOfInstances) {
-      throw new Error('Max number of instances reached');
-    }
-    Necromancer._numberOfInstances += 1;
     this._energyType = 'mana';
   }
 
@@ -22,6 +17,11 @@ export default class Necromancer extends Archetype {
   }
 
   public static createdArchetypeInstances(): number {
+    if (!this._numberOfInstances) {
+      this._numberOfInstances = 1;
+      return this._numberOfInstances;
+    }
+    this._numberOfInstances += 1;
     return this._numberOfInstances;
   }
 }
